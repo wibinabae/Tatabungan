@@ -3,11 +3,17 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="/tos">
+        <a class="nav-link " href="/">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
-      </li><!-- End Dashboard Nav -->
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="/tabungan">
+          <i class="bi bi-book"></i>
+          <span>Buku Tabungan</span>
+        </a>
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">

@@ -1,1 +1,0 @@
-<x-layout>Ini Halaman Contoh 1</x-layout>

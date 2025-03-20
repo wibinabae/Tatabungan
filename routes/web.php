@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('test');
+    return view('dashboard', ['title' => 'Dashboard']);
 });
-Route::get('/tos', function () {
-    return view('tos');
+
+Route::get('/tabungan', function () {
+    return view('tabungan', ['title' => 'Buku Tabungan']);
 });
