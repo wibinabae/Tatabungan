@@ -13,3 +13,7 @@ Route::get('/tabungan', function () {
 Route::get('/register', function () {
     return view('user_registration/registration');
 });
+
+Route::get('/aktivasi', function () {
+    return view('user_registration/activation');
+});
