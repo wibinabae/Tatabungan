@@ -5,10 +5,31 @@
 
             <!-- Floating Labels Form -->
             <form class="row g-3">
+                
                 <div class="col-md-6">
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="floatingName" placeholder="Nama Pengguna">
-                        <label for="floatingName">Nama Pengguna</label>
+                        <input type="text" class="form-control" id="floatingName" placeholder="Nama Lengkap">
+                        <label for="floatingName">Nama Lengkap</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="floatingUsername" placeholder="Nama Pengguna">
+                        <label for="floatingUsername">Username</label>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="form-floating">
+                        <input type="tel" class="form-control" id="floatingWa" placeholder="Nomor Whatsapp"
+                            pattern="\d*" title="Nomor whatsapp harus angka">
+                        <label for="floatingWa">Nomor Whatsapp</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="email" class="form-control" id="floatingEmail" placeholder="Email Aktif">
+                        <label for="floatingEmail">Email Aktif</label>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -26,19 +47,8 @@
                         <label for="floatingTtl">Tanggal Lahir</label>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-floating">
-                        <input type="tel" class="form-control" id="floatingWa" placeholder="Nomor Whatsapp"
-                            pattern="\d*" title="Nomor whatsapp harus angka">
-                        <label for="floatingWa">Nomor Whatsapp</label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-floating">
-                        <input type="email" class="form-control" id="floatingEmail" placeholder="Email Aktif">
-                        <label for="floatingEmail">Email Aktif</label>
-                    </div>
-                </div>
+                
+               
 
                 <div class="col-12">
                     <div class="form-floating">
