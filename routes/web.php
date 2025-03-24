@@ -17,3 +17,7 @@ Route::get('/register', function () {
 Route::get('/aktivasi', function () {
     return view('user_registration/activation');
 });
+
+Route::get('/login', function () {
+    return view('auth/login');
+});
