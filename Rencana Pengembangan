@@ -1,4 +1,8 @@
 #Rencana Pengembangan#
 1. Membuat User Registration
 Pertama user akan mengisi form data diri untuk pendaftaran dan memasukan nomor Whatsapp yang aktif, setelah selesai, 
-User akan mendapatkan kode unik yang dikirim melalui whatsapp untuk verifikasi. Ketika verifikasi berhasil, maka akun user berhasil dibuat. 
+User akan mendapatkan kode unik yang dikirim melalui whatsapp untuk verifikasi. 
+Ketika verifikasi berhasil, maka akun user berhasil dibuat. 
+
+2. Membuat Dashboard
+3. Membuat Fitur Pembuatan Tabungan
