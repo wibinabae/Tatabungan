@@ -38,13 +38,16 @@ class UserController extends Controller
 
     public function activation($code){
 
+        $decode = base64_decode($code);
+        $parts = explode('-', $decode);
         $preUser = PreUser::select('username', 'fullname', 'email')
-        ->where('id', $code)
+        ->where('id', $parts[0])
+        ->where('username', $parts[1])
+        ->where('wa_number',$parts[2])
         ->first();
 
 
         if ($preUser) {
-            // Kirimkan data ke view
             return view('user_registration/activation', [
                 'title' => 'Aktivasi',
                 'preUser' => $preUser,
@@ -74,7 +77,7 @@ class UserController extends Controller
         // }
 
         // Membuat user baru
-        PreUser::create([
+       $preUser= PreUser::create([
             'username' => $validated['username'],
             'fullname' => $validated['fullname'],
             'email' => $validated['email'],
@@ -84,8 +87,9 @@ class UserController extends Controller
             'activation_code_expired_at' => now()->addMinutes(30),
            
         ]);
+        $encode = base64_encode($preUser->id.'-'.$validated['username'].'-'.$validated['wa_number']);
         // Redirect atau tampilkan pesan sukses
-        return redirect('/register')->with('success', 'Pendaftaran berhasil! Silakan cek WhatsApp untuk aktivasi.');
+        return redirect('/activation/'.$encode)->with('success', 'Pendaftaran berhasil! Silakan cek WhatsApp untuk aktivasi.');
     }
 
     public function store(Request $request)
