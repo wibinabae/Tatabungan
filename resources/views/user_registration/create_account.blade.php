@@ -10,7 +10,7 @@
             <h2 class="card-title text-center">Pendaftaran Akun Tatabungan</h2>
 
             <!-- Floating Labels Form -->
-            <form class="row g-3" action="{{ route('register.store_register') }}" method="POST">
+            <form class="row g-3" action="{{ route('register.store') }}" method="POST">
                 @csrf
 
                 <div class="col-md-6">
@@ -51,7 +51,61 @@
                         <label for="floatingSelect">Jenis Kelamin</label>
                     </div>
                 </div>
-            
+                <div class="col-md-3">
+                    <div class="form-floating">
+                        <input type="date" class="form-control" id="floatingTtl" name="birth_date"
+                            placeholder="Tanggal Lahir" required>
+                        <label for="floatingTtl">Tanggal Lahir</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-floating">
+                        <!-- Dropdown untuk Provinsi -->
+                        <select class="form-select" name="province" id="provinceSelect" required>
+                            <option value="">Pilih Provinsi</option>
+                            @foreach ($provinces as $province)
+                                <option value="{{ $province['code'] }}">{{ $province['name'] }}</option>
+                            @endforeach
+                        </select>
+                        <label for="provinceSelect">Provinsi</label>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-floating">
+                        <select class="form-select" name="city" id="citySelect" required>
+                            <option value="">Pilih Kota</option>
+                        </select>
+                        <label for="citySelect">Kota</label>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-floating">
+                        <select class="form-select" name="district" id="districtSelect" required>
+                            <option value="">Pilih Kecamatan</option>
+                        </select>
+                        <label for="districtSelect">Kecamatan</label>
+                    </div>
+                </div>
+
+
+                <div class="col-md-3">
+                    <div class="form-floating">
+                        <select class="form-select" name="village" id="villageSelect" required>
+                            <option value="">Pilih Desa</option>
+                        </select>
+                        <label for="villageSelect">Desa</label>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Alamat" id="floatingTextarea" name="address" style="height: 100px;"
+                            required></textarea>
+                        <label for="floatingTextarea">Alamat</label>
+                    </div>
+                </div>
 
                 <div class="text-center">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"

@@ -1,8 +1,7 @@
 <x-user-layout>
-
     <div class="card">
         <div class="card-body text-center">
-            <h1 class="card-title text-center">Aktivasi Akun $nama_akun</h1>
+            <h1 class="card-title text-center">Aktivasi Akun {{$preUser['username']}}</h1>
             <span>Masukan kode aktivasi yang dikirimkan melalui WhatsApp</span>
             <!-- Floating Labels Form -->
             <form class="row g-3 justify-content-center">
@@ -25,7 +24,7 @@
     </div>
 
     <!-- Modal Konfirmasi-->
-    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
+    {{-- <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -44,7 +43,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <x-user-script>
 

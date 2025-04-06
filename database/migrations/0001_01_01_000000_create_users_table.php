@@ -11,12 +11,34 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::create('pre_users', function(Blueprint $table){
+            $table->id();
+            $table->string('username')->unique();
+            $table->string('fullname');
+            $table->string('email')->unique();
+            $table->string('wa_number');
+            $table->string('gender');
+            $table->string('activation_code')->unique();
+            $table->timestamp('activation_code_expired_at');
+            $table->timestamps();
+        });
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('username')->unique();
+            $table->string('fullname');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('wa_number');
+            $table->string('gender');
+            $table->date('birth_date');            
+            $table->string('city')->nullable();
+            $table->string('province')->nullable();
+            $table->string('postal_code')->nullable();
+            $table->string('district')->nullable();
+            $table->string('village')->nullable();
+            $table->string('address');
+            $table->string('password')->nullable();
+            $table->boolean('is_active')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
@@ -42,6 +64,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('pre_users');
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
