@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -44,9 +45,18 @@ Route::get('/aktivasi', function () {
     return view('user_registration/activation');
 });
 
-Route::get('/login', function () {
-    return view('auth/login');
-});
+// Route::get('/login', function () {
+//     return view('auth/login');
+// });
+
+// Menampilkan form login
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+
+// Menangani proses login
+Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
+
+// Menangani logout
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/dashboard', function () {
     return view('pages/dashboard', ['title' => 'Dashboard']);

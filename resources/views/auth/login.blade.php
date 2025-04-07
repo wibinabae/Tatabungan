@@ -24,7 +24,9 @@
                   <p class="text-center small">Masukan username dan password.</p>
                 </div>
 
-                <form class="row g-3 needs-validation" novalidate>
+                <form class="row g-3 needs-validation" method="POST" action="{{ route('login.submit') }}" novalidate>
+                  @csrf <!-- Token CSRF untuk keamanan -->
+
 
                   <div class="col-12">
                     <label for="yourUsername" class="form-label">Username</label>
