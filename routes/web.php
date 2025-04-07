@@ -25,7 +25,8 @@ Route::get('/getDistrictsByCity/{code}', [LocationController::class, 'getDistric
 Route::get('/register', [UserController::class, 'register'])->name('register.register');
 Route::post('/register', [UserController::class, 'store_register'])->name('register.store_register');
 Route::get('/activation/{code}', [UserController::class, 'activation'])->name('activation.activation');
-Route::get('/create-account', [UserController::class, 'create'])->name('create-account.create');
+Route::post('/activation/store_activation', [UserController::class, 'store_activation'])->name('activation.store_activation');
+Route::post('/create-account/{code}', [UserController::class, 'create'])->name('create-account.create');
 Route::post('/create-account', [UserController::class, 'store'])->name('create-account.store');
 
 Route::get('/aktivasi', function () {

@@ -26,25 +26,35 @@ class UserController extends Controller
         ]);
     }
 
-    public function create()
+    public function create($code)
     {
+        $decode = base64_decode($code);
+        $parts = explode('-', $decode);
+        $preUser = PreUser::select('username', 'fullname', 'email', 'wa_number')
+            ->where('id', $parts[0])
+            ->where('username', $parts[1])
+            ->where('wa_number', $parts[2])
+            ->first();
+
         $provinces = $this->Location->getProvinces();
 
         return view('user_registration/create_account', [
             'title' => 'Pendaftaran',
+            'preUser' => $preUser,
             'provinces' => $provinces['data'],
         ]);
     }
 
-    public function activation($code){
+    public function activation($code)
+    {
 
         $decode = base64_decode($code);
         $parts = explode('-', $decode);
         $preUser = PreUser::select('username', 'fullname', 'email')
-        ->where('id', $parts[0])
-        ->where('username', $parts[1])
-        ->where('wa_number',$parts[2])
-        ->first();
+            ->where('id', $parts[0])
+            ->where('username', $parts[1])
+            ->where('wa_number', $parts[2])
+            ->first();
 
 
         if ($preUser) {
@@ -58,9 +68,26 @@ class UserController extends Controller
         }
     }
 
+    public function store_activation(Request $request)
+    {
+        $code = $request->input('activation_code');
+
+        $preUser = PreUser::where('activation_code', $code)
+            ->where('activation_code_expired_at', '>', now())
+            ->first();
+        if (!$preUser) {
+            return redirect()->back()->with('error', 'Kode aktivasi tidak valid atau sudah kadaluarsa.');
+        }
+        // PreUser::where('id', 1)->update([
+        //     'is_registration' => true,
+        // ]);
+        
+        return redirect('/create-account')->with('success', 'Aktivasi berhasil! Silakan lengkapi data diri Anda.');
+    }
+
     public function store_register(Request $request)
     {
-        
+
         $validated = $request->validate([
             'username' => 'required|unique:users,username',
             'fullname' => 'required|string',
@@ -68,7 +95,7 @@ class UserController extends Controller
             'wa_number' => 'required|unique:users,wa_number|regex:/^\+?[1-9]\d{1,14}$/',
             'gender' => 'required',
             // 'birth_date' => 'required|date',
-           
+
         ]);
         // if($validated){
         //     dd("Ga ke validasi jir");
@@ -77,7 +104,7 @@ class UserController extends Controller
         // }
 
         // Membuat user baru
-       $preUser= PreUser::create([
+        $preUser = PreUser::create([
             'username' => $validated['username'],
             'fullname' => $validated['fullname'],
             'email' => $validated['email'],
@@ -85,12 +112,14 @@ class UserController extends Controller
             'gender' => $validated['gender'],
             'activation_code' => Str::upper(Str::random(6)),
             'activation_code_expired_at' => now()->addMinutes(30),
-           
+
         ]);
-        $encode = base64_encode($preUser->id.'-'.$validated['username'].'-'.$validated['wa_number']);
+        $encode = base64_encode($preUser->id . '-' . $validated['username'] . '-' . $validated['wa_number']);
         // Redirect atau tampilkan pesan sukses
-        return redirect('/activation/'.$encode)->with('success', 'Pendaftaran berhasil! Silakan cek WhatsApp untuk aktivasi.');
+        return redirect('/activation/' . $encode)->with('success', 'Pendaftaran berhasil! Silakan cek WhatsApp untuk aktivasi.');
     }
+
+
 
     public function store(Request $request)
     {
@@ -140,15 +169,15 @@ class UserController extends Controller
             'birth_date' => $validated['birth_date'],
             'city' => $cityName,
             'province' => $provinceName,
-            'district' =>$districts['data'][0]['name'],
-            'village' =>$villages['data'][0]['name'],
+            'district' => $districts['data'][0]['name'],
+            'village' => $villages['data'][0]['name'],
             'address' => $validated['address'],
             // 'password' => bcrypt($validated['password']), 
         ]);
         if ($user) {
             dd("User berhasil dibuat");
-        }else{
-            dd("Gagal Coooo") ;
+        } else {
+            dd("Gagal Coooo");
         }
         // Redirect atau tampilkan pesan sukses
         return redirect('/register')->with('success', 'Pendaftaran berhasil! Silakan cek WhatsApp untuk aktivasi.');

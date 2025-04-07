@@ -10,34 +10,35 @@
             <h2 class="card-title text-center">Pendaftaran Akun Tatabungan</h2>
 
             <!-- Floating Labels Form -->
-            <form class="row g-3" action="{{ route('register.store') }}" method="POST">
+            <form class="row g-3" action="{{ route('create-account.store') }}" method="POST">
                 @csrf
 
                 <div class="col-md-6">
                     <div class="form-floating">
                         <input type="text" class="form-control" id="floatingName" name="fullname"
-                            placeholder="Nama Lengkap" required>
+                            placeholder="Nama Lengkap" value="{{ $preUser['fullname'] }}" required readonly>
                         <label for="floatingName">Nama Lengkap</label>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-floating">
                         <input type="text" class="form-control" id="floatingUsername" name="username"
-                            placeholder="Nama Pengguna" required>
+                            placeholder="Nama Pengguna" value="{{ $preUser['username'] }}" required readonly>
                         <label for="floatingUsername">Username</label>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-floating">
                         <input type="tel" class="form-control" id="floatingWa" name="wa_number"
-                            placeholder="Nomor Whatsapp" pattern="\d*" title="Nomor whatsapp harus angka" required>
+                            value="{{ $preUser['wa_number'] }}" placeholder="Nomor Whatsapp"
+                            title="Nomor whatsapp harus angka" required readonly>
                         <label for="floatingWa">Nomor Whatsapp</label>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating">
                         <input type="email" class="form-control" id="floatingEmail" name="email"
-                            placeholder="Email Aktif" required>
+                            value="{{ $preUser['email'] }}" placeholder="Email Aktif" required readonly>
                         <label for="floatingEmail">Email Aktif</label>
                     </div>
                 </div>
@@ -45,8 +46,13 @@
                     <div class="form-floating mb-3">
                         <select class="form-select" id="floatingSelect" name="gender" aria-label="JenisKelamin"
                             required>
-                            <option value="L">Laki-Laki</option>
-                            <option value="P">Perempuan</option>
+                            <option value="{{ $preUser['gender'] }}">
+                                @if ($preUser['gender'] == 'L')
+                                    Laki-Laki
+                                @else
+                                    Perempuan
+                                @endif
+                            </option>
                         </select>
                         <label for="floatingSelect">Jenis Kelamin</label>
                     </div>

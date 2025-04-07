@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('gender');
             $table->string('activation_code')->unique();
             $table->timestamp('activation_code_expired_at');
+            $table->boolean('is_registration')->default(false);
             $table->timestamps();
         });
 
