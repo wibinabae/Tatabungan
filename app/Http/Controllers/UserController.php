@@ -81,7 +81,7 @@ class UserController extends Controller
         // PreUser::where('id', 1)->update([
         //     'is_registration' => true,
         // ]);
-        
+
         return redirect('/create-account')->with('success', 'Aktivasi berhasil! Silakan lengkapi data diri Anda.');
     }
 
@@ -123,6 +123,7 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $prov = $this->Location->getProvinces();
         $cities = $this->Location->getCities($request->province);
         $districts = $this->Location->getDistricts($request->city);
@@ -134,10 +135,22 @@ class UserController extends Controller
             $provinceName = $filteredProvince['name'];
         }
         $filteredCity = collect($cities['data'])->firstWhere('code', $desiredCityCode);
+
         if ($filteredCity) {
             $cityName = $filteredCity['name'];
         }
-        // dd($request->city,$provinceName, $cityName, $districts['data'][0]['name'], $villages['data'][0]['name']);
+
+        $filteredDistrict = collect($districts['data'])->firstWhere('code', $request->district);
+        if ($filteredDistrict) {
+            $districtName = $filteredDistrict['name'];
+        }
+
+        $filteredVillage = collect($villages['data'])->firstWhere('code', $request->village);
+        if ($filteredVillage) {
+            $villageName = $filteredVillage['name'];
+        }
+        
+        // dd($provinceName, $cityName, $districtName, $villageName);  
         // Validasi input
         $validated = $request->validate([
             'username' => 'required|unique:users,username',
@@ -151,7 +164,7 @@ class UserController extends Controller
             'district' => 'required',
             'village' => 'required',
             'address' => 'required',
-            // 'password' => 'required|min:6|confirmed', // Jika kamu menggunakan password
+            'password' => 'required', // Jika kamu menggunakan password
         ]);
         // if($validated){
         //     dd("Ga ke validasi jir");
@@ -159,6 +172,7 @@ class UserController extends Controller
         //     dd("Ke validasi");
         // }
 
+        // dd($districtName);
         // Membuat user baru
         $user = User::create([
             'username' => $validated['username'],
@@ -169,17 +183,18 @@ class UserController extends Controller
             'birth_date' => $validated['birth_date'],
             'city' => $cityName,
             'province' => $provinceName,
-            'district' => $districts['data'][0]['name'],
-            'village' => $villages['data'][0]['name'],
+            'district' => $districtName,
+            'village' => $villageName,
             'address' => $validated['address'],
-            // 'password' => bcrypt($validated['password']), 
+            'password' => bcrypt($validated['password']),
         ]);
+        // dd($user);
         if ($user) {
-            dd("User berhasil dibuat");
+            return redirect('/login')->with('success', 'Pendaftaran berhasil! Silakan Login.');
         } else {
-            dd("Gagal Coooo");
+            return redirect()->back()->with('error', 'Pendaftaran gagal! Silakan coba lagi.');
         }
         // Redirect atau tampilkan pesan sukses
-        return redirect('/register')->with('success', 'Pendaftaran berhasil! Silakan cek WhatsApp untuk aktivasi.');
+        // return redirect('/login')->with('success', 'Pendaftaran berhasil! Silakan cek WhatsApp untuk aktivasi.');
     }
 }

@@ -22,6 +22,13 @@
                 </div>
                 <div class="col-md-3">
                     <div class="form-floating">
+                        <input type="text" class="form-control" id="floatingPassword" name="password"
+                            placeholder="Kata Sandi"  required >
+                        <label for="floatingPassword">Kata Sandi</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-floating">
                         <input type="text" class="form-control" id="floatingUsername" name="username"
                             placeholder="Nama Pengguna" value="{{ $preUser['username'] }}" required readonly>
                         <label for="floatingUsername">Username</label>
@@ -44,19 +51,16 @@
                 </div>
                 <div class="col-md-3">
                     <div class="form-floating mb-3">
-                        <select class="form-select" id="floatingSelect" name="gender" aria-label="JenisKelamin"
-                            required>
-                            <option value="{{ $preUser['gender'] }}">
-                                @if ($preUser['gender'] == 'L')
-                                    Laki-Laki
-                                @else
-                                    Perempuan
-                                @endif
-                            </option>
+                        <select class="form-select" id="floatingSelect" name="gender" aria-label="JenisKelamin" required>
+                           
+                            <option value="L">Laki-Laki</option>
+                          
+                            <option value="P" >Perempuan</option>
                         </select>
                         <label for="floatingSelect">Jenis Kelamin</label>
                     </div>
                 </div>
+                
                 <div class="col-md-3">
                     <div class="form-floating">
                         <input type="date" class="form-control" id="floatingTtl" name="birth_date"
@@ -161,7 +165,7 @@
                 if (provinceCode) {
                     $.ajax({
                         // url: '{{ url('get-cities') }}/' + provinceCode,
-                        url: '{{ url('getCitiesByProvince') }}/' + provinceCode,
+                        url: '{{ route('location.cities', ':code') }}'.replace(':code', provinceCode),
                         type: 'GET',
                         success: function(data) {
                             $('#citySelect').empty();
@@ -185,7 +189,7 @@
 
                 if (cityCode) {
                     $.ajax({
-                        url: '{{ url('getDistrictsByCity') }}/' + cityCode,
+                        url: '{{ route('location.districts', ':code') }}'.replace(':code', cityCode),
                         type: 'GET',
                         success: function(data) {
                             $('#districtSelect').empty();
@@ -212,7 +216,7 @@
                 console.log(districtCode);
                 if (districtCode) {
                     $.ajax({
-                        url: '{{ url('getVillagesByDistrict') }}/' + districtCode,
+                        url: '{{ route('location.villages', ':code') }}'.replace(':code', districtCode),
                         type: 'GET',
                         success: function(data) {
                             $('#villageSelect').empty();

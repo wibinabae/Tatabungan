@@ -25,6 +25,8 @@ class User extends Authenticatable
         'gender',
         'birth_date',
         'city',
+        'district',
+        'village',
         'province',
         'postal_code',
         'country',
